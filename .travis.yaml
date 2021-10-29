@@ -1,0 +1,13 @@
+language: node
+
+services:
+  - docker
+
+before_install:
+  - docker build -t M4jor-Tom/TravisExercise .
+  - docker run -d -p 127.0.0.1:80:4567 M4jor-Tom/TravisExercise /bin/sh -c "cd /root/TravisExercise; bundle exec foreman start;"
+  - docker ps -a
+  - docker run M4jor-Tom/TravisExercise /bin/sh -c "cd /root/TravisExercise; bundle exec rake test"
+
+script:
+- bundle exec rake test
